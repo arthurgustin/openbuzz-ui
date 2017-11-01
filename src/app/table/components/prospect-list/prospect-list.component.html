@@ -1,0 +1,120 @@
+<div class="table-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- Icon Column -->
+    <ng-container matColumnDef="icon">
+      <mat-header-cell class="break-words" *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="break-words" *matCellDef="let row"> <span *ngIf="row.assets.icons"><img style="width:30px;" src="{{row.assets.icons[0].link}}"/></span> </mat-cell>
+    </ng-container>
+
+  <!-- Domain Column -->
+  <ng-container matColumnDef="domain">
+    <mat-header-cell class="break-words" *matHeaderCellDef> Domain </mat-header-cell>
+    <mat-cell class="text-ellipsis" *matCellDef="let row">
+      <p><a href="{{row.host}}">{{row.host}}</a></p>
+      <p style="text-align:left"><span  *ngIf="row.socialMedia">
+        <span *ngFor="let social of row.socialMedia">
+          <a *ngIf="social.name=='facebook'" href="{{ social.link }}"><i class="fa fa-facebook fa-lg"></i></a>
+          <a *ngIf="social.name=='twitter'" href="{{ social.link }}"><i class="fa fa-twitter fa-lg"></i></a>
+          <a *ngIf="social.name=='linkedin'" href="{{ social.link }}"><i class="fa fa-linkedin fa-lg"></i></a>
+          <a *ngIf="social.name=='google'" href="{{ social.link }}"><i class="fa fa-google-plus fa-lg"></i></a>
+          <a *ngIf="social.name=='youtube'" href="{{ social.link }}"><i class="fa fa-youtube fa-lg"></i></a>
+        </span>
+      </span></p>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Tags Column -->
+  <ng-container matColumnDef="tags">
+    <mat-header-cell class="break-words" *matHeaderCellDef> Tags </mat-header-cell>
+    <mat-cell class="break-words" *matCellDef="let row">
+       <span  *ngIf="row.tags">
+         <span *ngFor="let tag of row.tags; let i = index">
+          <mat-chip *ngIf="i < 7">{{tag}}</mat-chip>
+        </span>
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Description Column -->
+  <ng-container matColumnDef="description">
+    <mat-header-cell class="break-words" *matHeaderCellDef> Description </mat-header-cell>
+    <mat-cell *matCellDef="let row"> <div matTooltip="{{row.description}}">{{row.description  | slice:0:100}}</div> </mat-cell>
+  </ng-container>
+
+  <!-- Emails Column -->
+  <ng-container matColumnDef="emails">
+    <mat-header-cell class="break-words" *matHeaderCellDef> Emails </mat-header-cell>
+    <mat-cell class="break-words" *matCellDef="let row">
+       <span  *ngIf="row.emails">
+         <p *ngFor="let e of row.emails; let i = index">
+            <a href="mailto:{{e.email}}">{{e.email}}</a>
+        </p>
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell class="break-words" *matHeaderCellDef></mat-header-cell>
+  <mat-cell class="break-words" *matCellDef="let row" class="align-right">
+  <button (click)="edit(row)">
+  <mat-icon>edit</mat-icon>
+  </button>
+  <button (click)="delete(row)" >
+  <mat-icon>delete</mat-icon>
+  </button>
+  </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+<!--<div class="table-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell class="break-words" *matHeaderCellDef i18n="@@name"> Name </mat-header-cell>
+      <mat-cell class="break-words" *matCellDef="let row"> {{row.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell class="break-words" *matHeaderCellDef i18n="@@description"> Description </mat-header-cell>
+      <mat-cell class="break-words" *matCellDef="let row"> {{row.description}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rsckey">
+      <mat-header-cell class="break-words" *matHeaderCellDef i18n="@@rsckey"> RSCKey </mat-header-cell>
+      <mat-cell class="break-words" *matCellDef="let row"> {{row.rsckey}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell class="break-words" *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="break-words" *matCellDef="let row" class="align-right">
+        <button *ngIf="(userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','WRITE') | async) || ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-icon-button color="primary" (click)="edit(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button *ngIf="!hasDomains(row) && ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-icon-button color="primary" (click)="delete(row)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button *ngIf="hasDomains(row) && ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-icon-button disabled i18n-title="@@assignedDomainDeleteImpossible" title="Impossible to delete. Assigned to a domain.">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-progress-bar *ngIf="isLoading" mode="query"></mat-progress-bar>
+</div>
+
+
+  <button *ngIf="(userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','WRITE') | async) || ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-fab class="fixed-fab" (click)="add()" color="primary">
+    <mat-icon>add</mat-icon>
+  </button>
+-->

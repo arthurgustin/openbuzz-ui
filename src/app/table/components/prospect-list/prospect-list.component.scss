@@ -1,0 +1,44 @@
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1),
+{
+  flex: 0 0 4%;
+}
+
+.mat-cell,
+.mat-header-cell,
+{
+  padding:3px;
+}
+
+.tooltip {
+  font-size: 16px !important;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+}
+
+a:link {
+  color: #265301;
+}
+
+a:visited {
+  color: #437A16;
+}
+
+a:focus {
+  border-bottom: 1px solid;
+  background: #BAE498;
+}
+
+a:hover {
+  border-bottom: 1px solid;
+  background: #CDFEAA;
+}
+
+a:active {
+  background: #265301;
+  color: #CDFEAA;
+}

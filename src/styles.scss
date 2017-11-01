@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+// Specific Application style
+
+.fixed-fab{
+  position: fixed !important;
+}
+
+.align-right{
+  text-align: right;
+}
+
+.block{
+  display: block !important;
+}
+
+.table-container{
+  margin: auto;
+}
+
+.input-full-width{
+    width: 100%;
+}
+
+.flex{
+  display: flex;
+}
+
+.form-card{
+    width: 50vw;
+}
+
+.component-container{
+    height: calc(100vh - 48px - 2*8px - 2px) ;
+    overflow: auto;
+}
+
+.table-container {
+  table-layout: fixed; width: 95%;
+}
+mat-cell, mat-header-cell {
+  max-width: 20%;
+}
+
+.break-words {
+  word-wrap: break-word!important;
+  overflow-wrap: break-word!important;
+}
+
+.text-ellipsis {
+  white-space: nowrap!important;
+  overflow: hidden!important;
+  text-overflow: ellipsis!important;
+}
