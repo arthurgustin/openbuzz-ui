@@ -1,4 +1,9 @@
 <div class="table-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field floatPlaceholder="never">
+      <input matInput #filter placeholder="Filter by domain, description, tags">
+    </mat-form-field>
+  </div>
   <mat-table #table [dataSource]="dataSource">
 
     <!-- Icon Column -->
@@ -30,7 +35,7 @@
     <mat-cell class="break-words" *matCellDef="let row">
        <span  *ngIf="row.tags">
          <span *ngFor="let tag of row.tags; let i = index">
-          <mat-chip *ngIf="i < 7">{{tag}}</mat-chip>
+          <mat-chip style ="background-color: #C0C5C8" *ngIf="i < 7">{{tag}}</mat-chip>
         </span>
       </span>
     </mat-cell>
@@ -39,7 +44,10 @@
   <!-- Description Column -->
   <ng-container matColumnDef="description">
     <mat-header-cell class="break-words" *matHeaderCellDef> Description </mat-header-cell>
-    <mat-cell *matCellDef="let row"> <div matTooltip="{{row.description}}">{{row.description  | slice:0:100}}</div> </mat-cell>
+    <mat-cell *matCellDef="let row"> 
+      <div *ngIf="row.description.length > 100" matTooltip="{{row.description}}">{{row.description  | slice:0:100}}...</div>
+      <div *ngIf="row.description.length <= 100" matTooltip="{{row.description}}">{{row.description}}</div>
+    </mat-cell>
   </ng-container>
 
   <!-- Emails Column -->
@@ -55,7 +63,7 @@
   </ng-container>
 
   <!-- Actions Column -->
-  <ng-container matColumnDef="actions">
+  <!--ng-container matColumnDef="actions">
     <mat-header-cell class="break-words" *matHeaderCellDef></mat-header-cell>
   <mat-cell class="break-words" *matCellDef="let row" class="align-right">
   <button (click)="edit(row)">
@@ -65,56 +73,17 @@
   <mat-icon>delete</mat-icon>
   </button>
   </mat-cell>
-  </ng-container>
+  </ng-container-->
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+
+  <mat-paginator #paginator
+                [length]="_prospects.getValue().length"
+                [pageIndex]="0"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+
 </div>
-<!--<div class="table-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource">
-
-
-    <ng-container matColumnDef="name">
-      <mat-header-cell class="break-words" *matHeaderCellDef i18n="@@name"> Name </mat-header-cell>
-      <mat-cell class="break-words" *matCellDef="let row"> {{row.name}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-      <mat-header-cell class="break-words" *matHeaderCellDef i18n="@@description"> Description </mat-header-cell>
-      <mat-cell class="break-words" *matCellDef="let row"> {{row.description}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="rsckey">
-      <mat-header-cell class="break-words" *matHeaderCellDef i18n="@@rsckey"> RSCKey </mat-header-cell>
-      <mat-cell class="break-words" *matCellDef="let row"> {{row.rsckey}} </mat-cell>
-    </ng-container>
-
-
-    <ng-container matColumnDef="actions">
-      <mat-header-cell class="break-words" *matHeaderCellDef></mat-header-cell>
-      <mat-cell class="break-words" *matCellDef="let row" class="align-right">
-        <button *ngIf="(userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','WRITE') | async) || ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-icon-button color="primary" (click)="edit(row)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button *ngIf="!hasDomains(row) && ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-icon-button color="primary" (click)="delete(row)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button *ngIf="hasDomains(row) && ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-icon-button disabled i18n-title="@@assignedDomainDeleteImpossible" title="Impossible to delete. Assigned to a domain.">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-  <mat-progress-bar *ngIf="isLoading" mode="query"></mat-progress-bar>
-</div>
-
-
-  <button *ngIf="(userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','WRITE') | async) || ((userService.hasRight('OPERATOR_SETTINGS_FIREWALL_DOMAIN','DELETE') | async))" mat-fab class="fixed-fab" (click)="add()" color="primary">
-    <mat-icon>add</mat-icon>
-  </button>
--->

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+
+  "name": "buzz",
+  "description": "private extension",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "logo.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+	"storage",
+    "tabs",
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

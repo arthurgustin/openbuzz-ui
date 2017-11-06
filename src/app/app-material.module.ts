@@ -12,6 +12,7 @@ import {
     MatSlideToggleModule,
     MatSnackBarModule,
     MatTableModule,
+    MatPaginatorModule,
     MatTabsModule,
     MatTooltipModule,
   MatChipsModule,
@@ -19,7 +20,7 @@ import {
 import { NgModule } from '@angular/core';
 
 const MODULES = [MatDialogModule, MatInputModule, MatCardModule, MatCheckboxModule, MatChipsModule,
-    MatButtonModule, MatTabsModule, MatIconModule, MatTableModule, MatSelectModule, MatSlideToggleModule,
+    MatButtonModule, MatTabsModule, MatIconModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule,
     MatProgressBarModule, MatSnackBarModule, MatFormFieldModule, MatTooltipModule, CdkTableModule];
 
 @NgModule({

@@ -1,7 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+//@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-.material-icons {
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core();
+
+// Define the default theme (same as the example above).
+$candy-app-primary: mat-palette($mat-red, 800);
+$candy-app-accent:  mat-palette($mat-red);
+$candy-app-warn:    mat-palette($mat-amber);
+$candy-app-theme:   mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Include the default theme styles.
+@include angular-material-theme($candy-app-theme);
+
+
+.mat-button {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -77,4 +95,30 @@ mat-cell, mat-header-cell {
   white-space: nowrap!important;
   overflow: hidden!important;
   text-overflow: ellipsis!important;
+}
+
+$button-margin : 23px;
+
+.fixed-button {
+  position: fixed !important;
+  right: $button-margin;
+  bottom: $button-margin;
+  cursor: pointer;
+}
+
+.fixed-button:hover, .centered-button:hover {
+  background: darkred;
+}
+
+body {
+    background-color: #37474F;
+}
+
+.mat-tooltip {
+  background-color: #4E6068;
+}
+
+.centered-button {
+  position: fixed !important;
+    right: 50%;
 }

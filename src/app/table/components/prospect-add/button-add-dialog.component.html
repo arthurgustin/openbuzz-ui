@@ -1,0 +1,17 @@
+<form [formGroup]="formGroup" novalidate (ngSubmit)="crawl()" style="display: flex;
+  flex-flow: column; height:100%;
+  justify-content: center; /* center items vertically, in this case */
+  align-items: center;     /* center items horizontally, in this case */
+" >
+
+    <mat-form-field #parentdiv style="height: calc(60vh*0.7);width:100%">
+      <textarea style="height: calc(60vh*0.7);max-height:calc(60vh*0.7);" matInput type="text" placeholder="Domains" formControlName="urls"></textarea>
+    </mat-form-field>
+
+  <div style="flex-grow: 1;"></div>
+
+  <button mat-fab [style.background-color]="getStyle()" type="submit">
+    <mat-icon (click)="toggleState()">{{icon}}</mat-icon>
+  </button>
+
+</form>
