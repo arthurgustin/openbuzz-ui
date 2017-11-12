@@ -19,7 +19,7 @@ import {DialogType} from '../../../shared/models/dialog-type';
 export class ProspectListComponent implements OnInit {
     public  _prospects: BehaviorSubject<Prospect[]>;
     public dataSource: ProspectData | null;
-    public displayedColumns = ['icon', 'domain', 'description', 'tags', 'emails', 'actions'];
+    public displayedColumns = ['checkbox', 'icon', 'domain', 'description', 'tags', 'emails', 'actions'];
 
     @ViewChild('filter') filter: ElementRef;
     @ViewChild('paginator') paginator: MatPaginator;
@@ -63,8 +63,12 @@ export class ProspectListComponent implements OnInit {
         );
     }
 
-    public edit(prospect: Prospect) {
-
+    selectAll() {
+        this._prospects.forEach(p => {
+          p.forEach(d => {
+            console.log(d);
+          });
+        });
     }
 
     public delete(prospect: Prospect) {
