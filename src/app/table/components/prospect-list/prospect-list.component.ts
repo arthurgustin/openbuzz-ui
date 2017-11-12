@@ -9,8 +9,6 @@ import {PageEvent} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
 import {CrawlStateService} from '../../services/prospect/state-changed.service';
 
-
-
 @Component({
   selector: 'app-prospect-list',
   templateUrl: './prospect-list.component.html',
@@ -19,7 +17,7 @@ import {CrawlStateService} from '../../services/prospect/state-changed.service';
 export class ProspectListComponent implements OnInit {
     public  _prospects: BehaviorSubject<Prospect[]>;
     public dataSource: ProspectData | null;
-    public displayedColumns = ['icon', 'domain', 'description', 'tags', 'emails'/*, 'actions'*/];
+    public displayedColumns = ['icon', 'domain', 'description', 'tags', 'emails', 'actions'];
 
     @ViewChild('filter') filter: ElementRef;
     @ViewChild('paginator') paginator: MatPaginator;
@@ -67,7 +65,13 @@ export class ProspectListComponent implements OnInit {
     }
 
     public delete(prospect: Prospect) {
-
+      this.prospectService.deleteProspect(prospect.id)
+        .subscribe(
+          result => this.loadData(),
+          error => this.snackBar.open(`Server error: ` + error.toString(), 'OK', {
+            duration: 5000,
+          }),
+        );
     }
 
 }

@@ -44,7 +44,7 @@
   <!-- Description Column -->
   <ng-container matColumnDef="description">
     <mat-header-cell class="break-words" *matHeaderCellDef> Description </mat-header-cell>
-    <mat-cell *matCellDef="let row"> 
+    <mat-cell *matCellDef="let row">
       <div *ngIf="row.description.length > 100" matTooltip="{{row.description}}">{{row.description  | slice:0:100}}...</div>
       <div *ngIf="row.description.length <= 100" matTooltip="{{row.description}}">{{row.description}}</div>
     </mat-cell>
@@ -63,17 +63,14 @@
   </ng-container>
 
   <!-- Actions Column -->
-  <!--ng-container matColumnDef="actions">
+  <ng-container matColumnDef="actions">
     <mat-header-cell class="break-words" *matHeaderCellDef></mat-header-cell>
   <mat-cell class="break-words" *matCellDef="let row" class="align-right">
-  <button (click)="edit(row)">
-  <mat-icon>edit</mat-icon>
-  </button>
   <button (click)="delete(row)" >
-  <mat-icon>delete</mat-icon>
+    <mat-icon>delete</mat-icon>
   </button>
   </mat-cell>
-  </ng-container-->
+  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

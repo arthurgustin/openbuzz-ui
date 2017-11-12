@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import {CrudService} from '../utils/crud.service';
 import {WSReturn} from '../../models/ws-return';
 import {UrlsCrawl} from '../../models/urls-crawl';
+import {Prospect} from '../../models/prospect';
 
 @Injectable()
 export class ProspectService extends CrudService<WSReturn> {
 
   constructor(_http: HttpClient) {
-      // super(_http, '/list');
-      super(_http, 'http://localhost:1346/api/v1/list');
-   }
+    // super(_http, '/list');
+    super(_http, 'http://localhost:1346/api/v1/list');
+  }
 
-   public loadAll(): Observable<WSReturn> {
+  public loadAll(): Observable<WSReturn> {
     return this._http.get<WSReturn>(`${this._baseUrl}`)
       .catch(this.handleError);
   }
@@ -40,5 +41,31 @@ export class ProspectService extends CrudService<WSReturn> {
           resolve(data);
         });
     });
+  }
+
+  public deleteProspect(prospectId: string): Observable<any> {
+    const headers = new Headers({'Content-Type': 'application/json'});
+
+    return this._http
+      .delete('http://localhost:1346/api/v1/prospect/' + prospectId, headers)
+      .map(this.extractData)
+      .catch((error: HttpErrorResponse) => this.handleAngularJsonBug(error));
+  }
+
+  private extractData(res: Response) {
+    const body = res.json();
+    return body || {};
+  }
+
+  private handleAngularJsonBug (error: HttpErrorResponse) {
+    const JsonParseError = 'Http failure during parsing for';
+    const matches = error.message.match(new RegExp(JsonParseError, 'ig'));
+
+    if (error.status === 200 && matches.length === 1) {
+      // return obs that completes;
+      return Observable.empty();
+    } else {
+      return Observable.throw(error);		// re-throw
+    }
   }
 }
