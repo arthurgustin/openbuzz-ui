@@ -13,6 +13,7 @@ import {AppMaterialModule} from './app-material.module';
 import {ButtonAddComponent, ButtonAddDialogComponent} from './table/components/prospect-add/button-add.component';
 import {Autosize} from 'ng-autosize';
 import {CrawlStateService} from './table/services/prospect/state-changed.service';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {CrawlStateService} from './table/services/prospect/state-changed.service
     ReactiveFormsModule,
     HttpModule,
     AppMaterialModule,
-    TextareaAutosizeModule
+    TextareaAutosizeModule,
+    SharedModule
   ],
   entryComponents: [
     ButtonAddDialogComponent

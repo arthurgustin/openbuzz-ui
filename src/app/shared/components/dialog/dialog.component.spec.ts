@@ -1,0 +1,30 @@
+import { MatDialogRef } from '@angular/material';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DialogComponent } from './dialog.component';
+
+describe('DialogComponent', () => {
+  let component: DialogComponent;
+  let fixture: ComponentFixture<DialogComponent>;
+  class MockDialogRef { }
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ DialogComponent ],
+      providers: [{
+        provide: MatDialogRef,
+        useClass: MockDialogRef
+      }]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+  });
+});

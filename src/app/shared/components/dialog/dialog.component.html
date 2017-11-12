@@ -1,0 +1,20 @@
+<div mat-dialog>
+<div mat-dialog-content [ngSwitch]="type" class="mat-app-background">
+    <div *ngSwitchCase="types.confirmChangeLost">
+        All non staging changes will be lost, are you sure you want to continue ?
+    </div>
+    <div *ngSwitchCase="types.confirmDeleteMessage">
+        Do you really want to delete {{toDelete}} ?
+    </div>
+    <div *ngSwitchCase="types.confirmWarning">
+        Warning : {{warningMessage}}
+    </div>
+    <div *ngSwitchCase="types.confirmError">
+        Error : {{errorMessage}}
+    </div>
+</div>
+<div mat-dialog-actions  class="align-right block">
+    <button mat-raised-button color="primary" (click)="dialogRef.close('OK')">OK</button>
+    <button *ngIf="type != types.confirmWarning && type != types.confirmError" mat-raised-button (click)="dialogRef.close('CANCEL')">Cancel</button>
+</div>
+</div>

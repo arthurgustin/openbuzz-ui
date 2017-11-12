@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {MatPaginator, MatSnackBar} from '@angular/material';
+import {MatDialog, MatPaginator, MatSnackBar} from '@angular/material';
 import {Prospect} from '../../models/prospect';
 import {ProspectService} from '../../services/prospect/prospect.service';
 import {ProspectData} from '../../models/prospect-data';
@@ -8,6 +8,8 @@ import {Observable} from 'rxjs/Observable';
 import {PageEvent} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
 import {CrawlStateService} from '../../services/prospect/state-changed.service';
+import {DialogComponent} from '../../../shared/components/dialog/dialog.component';
+import {DialogType} from '../../../shared/models/dialog-type';
 
 @Component({
   selector: 'app-prospect-list',
@@ -27,7 +29,8 @@ export class ProspectListComponent implements OnInit {
 
     subscription: Subscription;
 
-    constructor(private prospectService: ProspectService, private crawlStateService: CrawlStateService, public snackBar: MatSnackBar) {
+    constructor(public dialog: MatDialog, private prospectService: ProspectService, private crawlStateService: CrawlStateService,
+                public snackBar: MatSnackBar) {
       this.subscription = this.crawlStateService.stateChanging.subscribe(message => {
         this.loadData();
       });
@@ -73,5 +76,23 @@ export class ProspectListComponent implements OnInit {
           }),
         );
     }
+
+  delete2(prospect: Prospect): void {
+    const dialogRef = this.dialog.open(DialogComponent, { disableClose : true} );
+    dialogRef.componentInstance.toDelete = prospect.host;
+    dialogRef.componentInstance.type = DialogType.confirmDeleteMessage;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'OK') {
+        this.prospectService.deleteProspect(prospect.id)
+          .finally(() => this.loadData())
+          .subscribe(
+            res => this.loadData(),
+            error => this.snackBar.open(`Server error: ` + error.toString(), 'OK', {
+              duration: 5000,
+            }),
+          );
+      }
+    });
+  }
 
 }

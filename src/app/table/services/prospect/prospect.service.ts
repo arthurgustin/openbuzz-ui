@@ -48,7 +48,6 @@ export class ProspectService extends CrudService<WSReturn> {
 
     return this._http
       .delete('http://localhost:1346/api/v1/prospect/' + prospectId, headers)
-      .map(this.extractData)
       .catch((error: HttpErrorResponse) => this.handleAngularJsonBug(error));
   }
 
